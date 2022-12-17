@@ -1,7 +1,5 @@
-package org.example;
+package gs;
 
-import org.example.GraphReader;
-import org.example.MySingleGraph;
 import org.graphstream.graph.Graph;
 import org.graphstream.ui.swingViewer.ViewPanel;
 import org.graphstream.ui.view.Viewer;
@@ -9,14 +7,9 @@ import panels.LeftPanel;
 import panels.RightPanel;
 
 import javax.swing.*;
-import javax.swing.plaf.SplitPaneUI;
-import javax.swing.plaf.basic.BasicSplitPaneDivider;
-import javax.swing.plaf.basic.BasicSplitPaneUI;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class GraphSwing {
 

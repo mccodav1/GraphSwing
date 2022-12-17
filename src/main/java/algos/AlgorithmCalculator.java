@@ -1,6 +1,6 @@
 package algos;
 
-import org.example.GraphReader;
+import gs.GraphReader;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 

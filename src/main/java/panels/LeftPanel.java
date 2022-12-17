@@ -1,7 +1,7 @@
 package panels;
 
-import org.example.GraphReader;
-import org.example.GraphSwing;
+import gs.GraphReader;
+import gs.GraphSwing;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -41,8 +41,10 @@ public class LeftPanel extends JPanel {
                 String[] connectedNodes = addNodePanel.getConnectedNodesToAdd();
                 for (String node : nodesToAdd) {
                     for (String connectedNode : connectedNodes) {
-                        graphSwing.getGraph().addEdge(node + connectedNode, node, connectedNode);
+                        graphSwing.getGraph().addEdge(node + connectedNode, node, connectedNode).addAttribute("length", 1);
+                        graphSwing.getGraph().getNode(connectedNode).setAttribute("label", connectedNode);
                     }
+                    graphSwing.getGraph().getNode(node).setAttribute("label", node);
                 }
                 graphSwing.redraw();
             }

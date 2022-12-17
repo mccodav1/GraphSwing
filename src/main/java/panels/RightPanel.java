@@ -1,7 +1,6 @@
 package panels;
 
-import org.example.GraphSwing;
-import org.graphstream.graph.Graph;
+import gs.GraphSwing;
 import org.graphstream.ui.swingViewer.ViewPanel;
 import org.graphstream.ui.view.Camera;
 import org.graphstream.ui.view.Viewer;
@@ -9,7 +8,6 @@ import org.graphstream.ui.view.Viewer;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 
 public class RightPanel extends JPanel {
 

@@ -1,6 +1,6 @@
 package panels;
 
-import org.example.GraphSwing;
+import gs.GraphSwing;
 
 import javax.swing.*;
 import javax.swing.border.Border;
