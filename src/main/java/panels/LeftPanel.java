@@ -42,7 +42,7 @@ public class LeftPanel extends JPanel {
                 for (String node : nodesToAdd) {
                     for (String connectedNode : connectedNodes) {
                         graphSwing.getGraph().addEdge(node + connectedNode, node, connectedNode).addAttribute("length", 1);
-                        graphSwing.getGraph().getNode(connectedNode).setAttribute("label", connectedNode);
+                        //graphSwing.getGraph().getNode(connectedNode).setAttribute("label", connectedNode);
                     }
                     graphSwing.getGraph().getNode(node).setAttribute("label", node);
                 }
@@ -92,6 +92,7 @@ public class LeftPanel extends JPanel {
             // when source.getValue() = 100, value = 5
             double value = (source.getValue() / 100.0) * 4.95 + .05;
             graphSwing.getViewPanel().getCamera().setViewPercent(value);
+            graphSwing.redraw();
         }
     }
     public JButton getAddButton() {

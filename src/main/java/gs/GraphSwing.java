@@ -1,10 +1,12 @@
 package gs;
 
+import javafx.scene.control.TabPane;
 import org.graphstream.graph.Graph;
 import org.graphstream.ui.swingViewer.ViewPanel;
 import org.graphstream.ui.view.Viewer;
 import panels.LeftPanel;
 import panels.RightPanel;
+import panels.TabPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +26,7 @@ public class GraphSwing {
 
     private ViewPanel viewPanel;
 
-    private LeftPanel leftPanel;
+    //private LeftPanel leftPanel;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new GraphSwing()::display);
@@ -36,7 +38,9 @@ public class GraphSwing {
             JFrame mainFrame = new JFrame();
             mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-            leftPanel = new LeftPanel(this);
+            //leftPanel = new LeftPanel(this);
+            //TODO remove
+            TabPanel leftPanel = new TabPanel(this);
             rightPanel = new RightPanel(this);
             viewPanel = rightPanel.getViewPanel();
 
