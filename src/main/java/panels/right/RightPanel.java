@@ -1,4 +1,4 @@
-package panels;
+package panels.right;
 
 import gs.GraphSwing;
 import org.graphstream.ui.swingViewer.ViewPanel;

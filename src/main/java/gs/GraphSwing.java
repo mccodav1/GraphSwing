@@ -1,17 +1,14 @@
 package gs;
 
-import javafx.scene.control.TabPane;
+import com.github.javafaker.Faker;
 import org.graphstream.graph.Graph;
 import org.graphstream.ui.swingViewer.ViewPanel;
 import org.graphstream.ui.view.Viewer;
-import panels.LeftPanel;
-import panels.RightPanel;
-import panels.TabPanel;
+import panels.right.RightPanel;
+import panels.left.LeftPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 
 public class GraphSwing {
 
@@ -26,7 +23,7 @@ public class GraphSwing {
 
     private ViewPanel viewPanel;
 
-    //private LeftPanel leftPanel;
+    private LeftPanel leftPanel;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new GraphSwing()::display);
@@ -35,22 +32,18 @@ public class GraphSwing {
     private void display() {
         try {
             graph = new MySingleGraph("Single Graph");
-            JFrame mainFrame = new JFrame();
-            mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-            //leftPanel = new LeftPanel(this);
-            //TODO remove
-            TabPanel leftPanel = new TabPanel(this);
+            leftPanel = new LeftPanel(this);
             rightPanel = new RightPanel(this);
             viewPanel = rightPanel.getViewPanel();
 
             JSplitPane mainPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, rightPanel);
             mainPanel.setOneTouchExpandable(true);
-            leftPanel.setMinimumSize(new Dimension(100, 50));
-            rightPanel.setMinimumSize(new Dimension(600, 600));
-            leftPanel.setMaximumSize(new Dimension(300, 2000));
+            mainPanel.setEnabled(false);
+            leftPanel.setMinimumSize(new Dimension(300, 50));
             mainPanel.setContinuousLayout(true);
 
+            JFrame mainFrame = new JFrame();
+            mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             mainFrame.add(mainPanel);
             mainFrame.pack();
             mainFrame.setLocationRelativeTo(null);
@@ -58,29 +51,32 @@ public class GraphSwing {
             mainFrame.setTitle("JTViewer");
             mainFrame.setMinimumSize(new Dimension(400, 400));
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-
-
-            mainFrame.addComponentListener(new ComponentAdapter() {
-                public void componentResized(ComponentEvent e) {
-                    Dimension d = mainFrame.getSize();
-                    Dimension minD = mainFrame.getMinimumSize();
-                    if (d.width < minD.width)
-                        d.width = minD.width;
-                    if (d.height < minD.height)
-                        d.height = minD.height;
-                    mainFrame.setSize(d);
-                    rightPanel.setMinimumSize(new Dimension(mainFrame.getSize().width-300, 600));
-                    redraw();
-                }
-            });
-
-
-            addRandomNodes();
+            //SwingUtilities.updateComponentTreeUI(mainFrame);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
     }
 
+    public void addRandomNodesWithNames(){
+        for (int i = 0; i < NUM_RANDOM_NODES_TO_ADD; i++) {
+            String name = new Faker().name().fullName();
+            // add between 0 and 10 connections
+            int numConnections = (int) (Math.random() * 10);
+            graph.addNode(name);
+            for (int j = 0; j < numConnections; j++) {
+                //10% of the time, have the random name actually be an existing node's name
+                String connectionName = "";
+                if (Math.random() < .1) {
+                    // get a random node from the graph
+                    connectionName = graph.getNode((int) (Math.random() * graph.getNodeCount())).getId();
+                } else {
+                    connectionName = new Faker().name().fullName();
+                }
+                graph.addEdge(name+"_"+connectionName, name, connectionName);
+            }
+            setShowLabels(true);
+        }
+    }
     public void addRandomNodes() {
         for (int i = 0; i < NUM_RANDOM_NODES_TO_ADD; i++) {
             int random = (int) (Math.random() * NUM_RANDOM_NODES_TO_ADD * 50);
@@ -99,7 +95,7 @@ public class GraphSwing {
     }
 
     public void openFile() {
-        Graph newGraph = GraphReader.openFile();
+        Graph newGraph = GraphCreator.openFile();
         if (newGraph != null) {
             graph = newGraph;
             redraw();
@@ -111,7 +107,8 @@ public class GraphSwing {
     }
 
     public void redraw(){
-        viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_GUI_THREAD);
+        //viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_GUI_THREAD);
+        viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
         viewer.enableAutoLayout();
         viewPanel = viewer.addDefaultView(false);
         rightPanel.removeAll();
@@ -119,6 +116,14 @@ public class GraphSwing {
         rightPanel.revalidate();
         rightPanel.repaint();
 
+    }
+
+    public void setShowLabels(boolean b) {
+        graph.getNodeSet().forEach(node -> node.setAttribute("label", b ? node.getId() : ""));
+    }
+
+    public void repaint() {
+        redraw();
     }
 }
 

@@ -1,6 +1,6 @@
-package panels;
+package panels.left;
 
-import gs.GraphReader;
+import gs.GraphCreator;
 import gs.GraphSwing;
 
 import javax.swing.*;
@@ -9,7 +9,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.io.IOException;
 
-public class LeftPanel extends JPanel {
+public class NodesPanel extends JPanel {
 
     private AddNodePanel addNodePanel;
 
@@ -19,10 +19,19 @@ public class LeftPanel extends JPanel {
 
     private GraphSwing graphSwing;
 
-    public LeftPanel(GraphSwing graphSwing) {
+    private ModifyDisplayPanel modifyDisplayPanel;
+
+    public NodesPanel(GraphSwing graphSwing) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         addNodePanel = new AddNodePanel();
         add(addNodePanel);
+
+        // add a panel to hold two buttons side by side
+        modifyDisplayPanel = new ModifyDisplayPanel(graphSwing);
+        add(modifyDisplayPanel);
+
+
+
         sliderPanel = new SliderPanel();
         add(sliderPanel);
         add(Box.createVerticalGlue());
@@ -64,14 +73,14 @@ public class LeftPanel extends JPanel {
 
         getSaveButton().addActionListener(e -> {
             try {
-                GraphReader.saveFile(graphSwing.getGraph());
+                GraphCreator.saveFile(graphSwing.getGraph());
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(null, "Error saving file.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
         getRandomButton().addActionListener(e -> {
-            graphSwing.addRandomNodes();
+            graphSwing.addRandomNodesWithNames();
         });
 
         getSlider().addChangeListener(new SliderListener());
