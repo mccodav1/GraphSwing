@@ -94,8 +94,8 @@ public class GraphSwing {
         return graph;
     }
 
-    public void openFile() {
-        Graph newGraph = GraphCreator.openFile();
+    public void getGraphFromFiles(String nodeFile, String linkFile) {
+        Graph newGraph = GraphCreator.getGraph(nodeFile, linkFile);
         if (newGraph != null) {
             graph = newGraph;
             redraw();

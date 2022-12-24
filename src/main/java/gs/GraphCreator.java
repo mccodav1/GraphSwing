@@ -5,6 +5,7 @@ import org.graphstream.graph.*;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -25,6 +26,7 @@ public class GraphCreator {
         }
     }
 
+    /*
     public static Graph getGraph(File file) throws IOException {
         Graph graph = new MySingleGraph("Single Graph");
         try {
@@ -40,6 +42,8 @@ public class GraphCreator {
         }
     }
 
+     */
+
     private static ArrayList<String[]> readFromBuffer(String fileName) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(fileName));
         return read(reader);
@@ -51,21 +55,51 @@ public class GraphCreator {
 
     }
 
+    /**
+     * Reads from buffered reader and creates an ArrayList of String arrays
+     * The first entry in the list represents the column titles
+     * The rest of the entries represent the data corresponding to the column titles
+     * The intent is to be read from a CSV file in the format:
+     *
+     *  (start of file)
+     *  title1,title2,title3
+     *  data1,data2,data3
+     *  ...
+     *  data1,data2,data3
+     *  (end of file)
+     *
+     * @param reader the reader to read from
+     * @return  an ArrayList of String arrays, with the first entry representing column titles and subsequent entries
+     * representing lines of data
+     * @throws IOException  If file is malformed (columns don't line up)
+     */
     private static ArrayList<String[]> read(BufferedReader reader) throws IOException {
-        //TODO: Instead of discarding the first line, we want to create an array of labels based on columns in file
-        // we want to ignore the first and
-        //
+        // reading first line tells us how many columns we have in file
+        ArrayList<String[]> entriesList = new ArrayList<>();
+
+        String line = reader.readLine();
+        if(line==null) return null;
+        String[] columnTitles = line.split(",");
+        int numColumns = columnTitles.length;
+
+        entriesList.add(columnTitles);
+
         String currentLine = reader.readLine();
-        currentLine = reader.readLine();
-        ArrayList<String[]> strings = new ArrayList<>();
         while (currentLine != null) {
-            String[] currentLineNames = new String[2];
-            currentLineNames[0] = currentLine.split(",")[0];
-            currentLineNames[1] = currentLine.split(",")[1];
-            strings.add(currentLineNames);
+            String[] currentLineArray = currentLine.split(",");
+            if (currentLineArray.length != numColumns) {
+                throw new IOException("File is not formatted correctly");
+            }
+            entriesList.add(currentLineArray);
             currentLine = reader.readLine();
         }
-        return strings;
+        for(String[] entry: entriesList){
+            for(String s: entry){
+                System.out.print(s + " ");
+            }
+            System.out.println();
+        }
+        return entriesList;
 
     }
 
@@ -121,5 +155,24 @@ public class GraphCreator {
             return null;
         }
         return graph;
+    }
+
+
+    //TODO: Implement setting attributes for nodes and edges
+    public static Graph getGraph(String nodeFile, String linkFile) {
+        Graph graph = new MySingleGraph("Single Graph");
+        try {
+            ArrayList<String[]> graphNodes = readFromBuffer(nodeFile);
+            ArrayList<String[]> graphLinks = readFromBuffer(linkFile);
+            for (String[] entry : graphNodes) {
+                graph.addNode(entry[0]);
+            }
+            for (String[] entry : graphLinks) {
+                graph.addEdge(entry[0] + "_" + entry[1], entry[0], entry[1]);
+            }
+            return graph;
+        } catch (IOException e) {
+            return null;
+        }
     }
 }

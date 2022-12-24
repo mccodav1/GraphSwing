@@ -34,6 +34,7 @@ public class NodesPanel extends JPanel {
 
         sliderPanel = new SliderPanel();
         add(sliderPanel);
+
         add(Box.createVerticalGlue());
         openFilePanel = new OpenFilePanel();
         add(openFilePanel);
@@ -44,6 +45,7 @@ public class NodesPanel extends JPanel {
     }
 
     private void addActionListeners() {
+
         getAddButton().addActionListener(e -> {
             String[] nodesToAdd = addNodePanel.getNodesToAdd();
             if (nodesToAdd != null) {
@@ -67,7 +69,10 @@ public class NodesPanel extends JPanel {
         });
 
         getOpenButton().addActionListener(e -> {
-            graphSwing.openFile();
+            //graphSwing.openFile(); deprecated functionality
+            OpenFilePopup openFilePopup = new OpenFilePopup(graphSwing);
+            openFilePopup.setVisible(true);
+
 
         });
 
