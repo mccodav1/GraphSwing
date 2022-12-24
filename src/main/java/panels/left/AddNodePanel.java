@@ -1,4 +1,4 @@
-package panels;
+package panels.left;
 
 import javax.swing.*;
 import javax.swing.border.Border;

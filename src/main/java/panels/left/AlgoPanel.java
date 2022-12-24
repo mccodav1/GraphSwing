@@ -1,4 +1,4 @@
-package panels;
+package panels.left;
 
 import algos.AlgorithmCalculator;
 import gs.GraphSwing;

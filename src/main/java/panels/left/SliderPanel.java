@@ -1,4 +1,4 @@
-package panels;
+package panels.left;
 
 import gs.GraphSwing;
 

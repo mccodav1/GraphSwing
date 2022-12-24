@@ -8,7 +8,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class GraphReader {
+public class GraphCreator {
 
     public static Graph getGraph(String filename) throws IOException {
         Graph graph = new MySingleGraph("Single Graph");
@@ -52,6 +52,9 @@ public class GraphReader {
     }
 
     private static ArrayList<String[]> read(BufferedReader reader) throws IOException {
+        //TODO: Instead of discarding the first line, we want to create an array of labels based on columns in file
+        // we want to ignore the first and
+        //
         String currentLine = reader.readLine();
         currentLine = reader.readLine();
         ArrayList<String[]> strings = new ArrayList<>();

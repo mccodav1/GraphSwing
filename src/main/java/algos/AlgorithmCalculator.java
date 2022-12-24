@@ -1,6 +1,6 @@
 package algos;
 
-import gs.GraphReader;
+import gs.GraphCreator;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 
@@ -23,7 +23,7 @@ public class AlgorithmCalculator {
     // Key bridges
 
     public static void main(String[] args) throws IOException {
-        Graph graph = GraphReader.getGraph("src/main/resources/links.csv");
+        Graph graph = GraphCreator.getGraph("src/main/resources/links.csv");
         String[] impNodes = getImportantNodes(graph);
         for (String node : impNodes) {
             System.out.println(node);
