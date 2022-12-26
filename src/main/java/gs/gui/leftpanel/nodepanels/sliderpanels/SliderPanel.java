@@ -1,6 +1,6 @@
-package panels.left;
+package gs.gui.leftpanel.nodepanels.sliderpanels;
 
-import gs.GraphSwing;
+import gs.core.GraphSwing;
 
 import javax.swing.*;
 import javax.swing.border.Border;

@@ -1,4 +1,4 @@
-package gs;
+package gs.core;
 
 import org.graphstream.graph.*;
 
@@ -11,7 +11,7 @@ import java.util.Iterator;
 public class GraphCreator {
 
     public static Graph getGraphFromFiles(String filename) throws IOException {
-        Graph graph = new MySingleGraph("Single Graph");
+        Graph graph = new gsGraph("Single Graph");
         try {
             ArrayList<String[]> graphNodes = readFromBuffer(filename);
             for (String[] entry : graphNodes) {
@@ -25,49 +25,9 @@ public class GraphCreator {
         }
     }
 
-    /*
-    public static Graph getGraph(File file) throws IOException {
-        Graph graph = new MySingleGraph("Single Graph");
-        try {
-            ArrayList<String[]> graphNodes = readFromBuffer(file);
-            for (String[] entry : graphNodes) {
-                graph.addEdge(entry[0] + "_" + entry[1], entry[0], entry[1]);
-            }
-            graph.getEdgeSet().forEach(edge -> edge.addAttribute("length", 1));
-            graph.getNodeSet().forEach(node -> node.addAttribute("label", node.getId()));
-            return graph;
-        } catch (IOException e) {
-            return null;
-        }
-    }
-
-     */
-
     private static ArrayList<String[]> readFromBuffer(String fileName) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(fileName));
-        return read(reader);
-    }
 
-    /**
-     * Reads from buffered reader and creates an ArrayList of String arrays
-     * The first entry in the list represents the column titles
-     * The rest of the entries represent the data corresponding to the column titles
-     * The intent is to be read from a CSV file in the format:
-     *
-     *  (start of file)
-     *  title1,title2,title3
-     *  data1,data2,data3
-     *  ...
-     *  data1,data2,data3
-     *  (end of file)
-     *
-     * @param reader the reader to read from
-     * @return  an ArrayList of String arrays, with the first entry representing column titles and subsequent entries
-     * representing lines of data
-     * @throws IOException  If file is malformed (columns don't line up)
-     */
-    private static ArrayList<String[]> read(BufferedReader reader) throws IOException {
-        // reading first line tells us how many columns we have in file
         ArrayList<String[]> entriesList = new ArrayList<>();
 
         String line = reader.readLine();
@@ -89,9 +49,14 @@ public class GraphCreator {
             currentLine = reader.readLine();
         }
         return entriesList;
-
     }
 
+    /**
+     * TODO: Re-implement with two-file methodology
+     * @param graph
+     * @return
+     * @throws IOException
+     */
     public static String saveFile(Graph graph) throws IOException {
         String fileName = null;
         JFileChooser fileChooser = new JFileChooser();
@@ -120,8 +85,9 @@ public class GraphCreator {
         return fileName;
     }
 
+
     public static Graph getGraphFromFiles(String nodeFile, String linkFile) {
-        Graph graph = new MySingleGraph("Single Graph");
+        Graph graph = new gsGraph("Single Graph");
         try {
             addNodesFromFile(graph, nodeFile);
             addLinksFromFile(graph, linkFile);
@@ -173,5 +139,9 @@ public class GraphCreator {
             }
         }
         System.out.println("Nodes added");
+    }
+
+    public static Graph getEmptyGraph() {
+        return new gsGraph("Single Graph");
     }
 }

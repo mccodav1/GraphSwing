@@ -1,11 +1,8 @@
-package panels.left;
+package gs.gui.leftpanel.nodepanels.modifydisplaypanels;
 
-import gs.GraphSwing;
-import org.graphstream.graph.implementations.Graphs;
+import gs.core.GraphSwing;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import java.awt.*;
 
 public class ModifyDisplayPanel extends JPanel {
     private GraphSwing gs;

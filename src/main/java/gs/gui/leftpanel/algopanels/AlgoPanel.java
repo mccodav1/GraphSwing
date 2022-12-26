@@ -1,11 +1,9 @@
-package panels.left;
+package gs.gui.leftpanel.algopanels;
 
-import algos.AlgorithmCalculator;
-import gs.GraphSwing;
-import javafx.application.Platform;
+import gs.core.AlgorithmCalculator;
+import gs.core.GraphSwing;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 
 public class AlgoPanel extends JPanel {

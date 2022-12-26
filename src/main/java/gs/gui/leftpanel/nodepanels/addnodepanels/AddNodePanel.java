@@ -1,4 +1,4 @@
-package panels.left;
+package gs.gui.leftpanel.nodepanels.addnodepanels;
 
 import javax.swing.*;
 import javax.swing.border.Border;

@@ -1,9 +1,9 @@
-package gs;
+package gs.core;
 
 import org.graphstream.graph.implementations.SingleGraph;
 
-public class MySingleGraph extends SingleGraph {
-    public MySingleGraph(String id) {
+public class gsGraph extends SingleGraph {
+    public gsGraph(String id) {
         super(id);
         setStrict(false);
         setAutoCreate(true);

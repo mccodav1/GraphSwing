@@ -1,8 +1,6 @@
-package panels.left;
+package gs.gui.leftpanel.nodepanels.openfilepopups;
 
-import gs.GraphCreator;
-import gs.GraphSwing;
-import org.graphstream.graph.Graph;
+import gs.core.GraphSwing;
 
 import javax.swing.*;
 import javax.swing.border.Border;

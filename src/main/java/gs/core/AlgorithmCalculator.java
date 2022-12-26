@@ -1,6 +1,6 @@
-package algos;
+package gs.core;
 
-import gs.GraphCreator;
+import gs.core.GraphCreator;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 

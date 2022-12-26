@@ -1,7 +1,12 @@
-package panels.left;
+package gs.gui.leftpanel.nodepanels;
 
-import gs.GraphCreator;
-import gs.GraphSwing;
+import gs.core.GraphCreator;
+import gs.core.GraphSwing;
+import gs.gui.leftpanel.nodepanels.addnodepanels.AddNodePanel;
+import gs.gui.leftpanel.nodepanels.modifydisplaypanels.ModifyDisplayPanel;
+import gs.gui.leftpanel.nodepanels.openfilepanels.OpenFilePanel;
+import gs.gui.leftpanel.nodepanels.openfilepopups.OpenFilePopup;
+import gs.gui.leftpanel.nodepanels.sliderpanels.SliderPanel;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -10,34 +15,33 @@ import java.awt.*;
 import java.io.IOException;
 
 public class NodesPanel extends JPanel {
-
     private AddNodePanel addNodePanel;
-
     private SliderPanel sliderPanel;
-
     private OpenFilePanel openFilePanel;
-
-    private GraphSwing graphSwing;
-
     private ModifyDisplayPanel modifyDisplayPanel;
+    private GraphSwing graphSwing;
 
     public NodesPanel(GraphSwing graphSwing) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        //Add Node Panel
         addNodePanel = new AddNodePanel();
         add(addNodePanel);
 
-        // add a panel to hold two buttons side by side
+        //Modify Display Panel
         modifyDisplayPanel = new ModifyDisplayPanel(graphSwing);
         add(modifyDisplayPanel);
 
-
-
+        //Slider Panel
         sliderPanel = new SliderPanel();
         add(sliderPanel);
 
+        //Open file panel
         add(Box.createVerticalGlue());
         openFilePanel = new OpenFilePanel();
         add(openFilePanel);
+
+        // Master panel setup
         setMaximumSize(new Dimension(200, 2000));
         setPreferredSize(new Dimension(300, 600));
         addActionListeners();
@@ -88,27 +92,8 @@ public class NodesPanel extends JPanel {
             graphSwing.addRandomNodesWithNames();
         });
 
-        getSlider().addChangeListener(new SliderListener());
-
     }
 
-    class SliderListener implements ChangeListener {
-
-        /**
-         * Invoked when the target of the listener has changed its state.
-         *
-         * @param e a ChangeEvent object
-         */
-        @Override
-        public void stateChanged(ChangeEvent e) {
-            JSlider source = (JSlider) e.getSource();
-            // when source.getValue() = 0, value = .05
-            // when source.getValue() = 100, value = 5
-            double value = (source.getValue() / 100.0) * 4.95 + .05;
-            graphSwing.getViewPanel().getCamera().setViewPercent(value);
-            graphSwing.redraw();
-        }
-    }
     public JButton getAddButton() {
         return addNodePanel.getAddButton();
     }
