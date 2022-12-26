@@ -7,6 +7,7 @@ public class MySingleGraph extends SingleGraph {
         super(id);
         setStrict(false);
         setAutoCreate(true);
+        setAttribute("ui.quality");
         setAttribute("ui.antialias");
     }
 }

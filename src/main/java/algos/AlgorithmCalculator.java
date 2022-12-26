@@ -23,7 +23,7 @@ public class AlgorithmCalculator {
     // Key bridges
 
     public static void main(String[] args) throws IOException {
-        Graph graph = GraphCreator.getGraph("src/main/resources/links.csv");
+        Graph graph = GraphCreator.getGraphFromFiles("src/main/resources/links.csv");
         String[] impNodes = getImportantNodes(graph);
         for (String node : impNodes) {
             System.out.println(node);

@@ -5,13 +5,12 @@ import org.graphstream.graph.*;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class GraphCreator {
 
-    public static Graph getGraph(String filename) throws IOException {
+    public static Graph getGraphFromFiles(String filename) throws IOException {
         Graph graph = new MySingleGraph("Single Graph");
         try {
             ArrayList<String[]> graphNodes = readFromBuffer(filename);
@@ -49,12 +48,6 @@ public class GraphCreator {
         return read(reader);
     }
 
-    private static ArrayList<String[]> readFromBuffer(File file) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(file));
-        return read(reader);
-
-    }
-
     /**
      * Reads from buffered reader and creates an ArrayList of String arrays
      * The first entry in the list represents the column titles
@@ -90,14 +83,10 @@ public class GraphCreator {
             if (currentLineArray.length != numColumns) {
                 throw new IOException("File is not formatted correctly");
             }
-            entriesList.add(currentLineArray);
-            currentLine = reader.readLine();
-        }
-        for(String[] entry: entriesList){
-            for(String s: entry){
-                System.out.print(s + " ");
+            if(!currentLineArray[0].equals("")) {
+                entriesList.add(currentLineArray);
             }
-            System.out.println();
+            currentLine = reader.readLine();
         }
         return entriesList;
 
@@ -131,48 +120,58 @@ public class GraphCreator {
         return fileName;
     }
 
-    public static Graph openFile() {
-        Graph graph = null;
-        String fileName = null;
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogType(JFileChooser.OPEN_DIALOG);
-        fileChooser.setFileFilter(new FileNameExtensionFilter("CSV", "csv"));
-        int returnValue = fileChooser.showOpenDialog(null);
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-            fileName = selectedFile.getName();
-            if(fileName.toLowerCase().endsWith(".csv")){
-                try {
-                    graph = getGraph(selectedFile.getAbsolutePath());
-                    JOptionPane.showMessageDialog(null, "File " + fileName + " opened successfully.", "Opened", JOptionPane.INFORMATION_MESSAGE);
-                } catch (IOException e) {
-                    JOptionPane.showMessageDialog(null, "File " + fileName + " could not be opened.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "CSV file expected. File " + fileName + " is not a csv file.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        } else {
-            return null;
+    public static Graph getGraphFromFiles(String nodeFile, String linkFile) {
+        Graph graph = new MySingleGraph("Single Graph");
+        try {
+            addNodesFromFile(graph, nodeFile);
+            addLinksFromFile(graph, linkFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
         return graph;
     }
 
+    private static void addLinksFromFile(Graph graph, String linkFile) throws IOException {
+        ArrayList<String[]> graphLinks = readFromBuffer(linkFile);
 
-    //TODO: Implement setting attributes for nodes and edges
-    public static Graph getGraph(String nodeFile, String linkFile) {
-        Graph graph = new MySingleGraph("Single Graph");
-        try {
-            ArrayList<String[]> graphNodes = readFromBuffer(nodeFile);
-            ArrayList<String[]> graphLinks = readFromBuffer(linkFile);
-            for (String[] entry : graphNodes) {
-                graph.addNode(entry[0]);
+        String[] linkLabels = graphLinks.get(0);
+        for (int entry = 1; entry < graphLinks.size(); entry++) {
+            String[] link = graphLinks.get(entry);
+
+            String sourceNodeLabel = link[0];
+            graph.addNode(sourceNodeLabel).setAttribute("label", sourceNodeLabel);
+
+            String targetNodeLabel = link[1];
+            graph.addNode(targetNodeLabel).setAttribute("label", targetNodeLabel);
+
+            Edge e = graph.addEdge(sourceNodeLabel + "_" + targetNodeLabel, sourceNodeLabel, targetNodeLabel);
+            if (e==null) {
+                e = graph.getEdge(targetNodeLabel + "_" + sourceNodeLabel);
             }
-            for (String[] entry : graphLinks) {
-                graph.addEdge(entry[0] + "_" + entry[1], entry[0], entry[1]);
+            for (int i = 2; i < link.length; i++) {
+                String label = linkLabels[i];
+                String value = link[i];
+                e.addAttribute(label, value);
             }
-            return graph;
-        } catch (IOException e) {
-            return null;
         }
+        System.out.println("Edges added");
+    }
+
+    private static void addNodesFromFile(Graph graph, String nodeFile) throws IOException {
+        // create nodes and set attributes
+        ArrayList<String[]> graphNodes = readFromBuffer(nodeFile);
+        // first string[] in graphNodes contains column labels
+        // each subsequent string[] in graphNodes contains a node
+        String[] nodeLabels = graphNodes.get(0);
+        // entry 0 contains labels; rest contain data
+        for (int entry = 1; entry < graphNodes.size(); entry++) {
+            String label = graphNodes.get(entry)[0];
+            Node n = graph.addNode(label);
+            n.setAttribute("label", label);
+            for (int j = 1; j < nodeLabels.length; j++) {
+                n.setAttribute(nodeLabels[j], graphNodes.get(entry)[j]);
+            }
+        }
+        System.out.println("Nodes added");
     }
 }
