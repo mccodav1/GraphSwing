@@ -1,4 +1,4 @@
-package gs.gui.leftpanel.nodepanels.addnodepanels;
+package gs.view.mainpane.leftpanel.nodepanels.addnodepanels;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -14,6 +14,8 @@ public class AddNodePanel extends JPanel {
 
     private final JButton randomButton;
 
+    private final JButton clearButton;
+
 
     public AddNodePanel() {
         setMaximumSize(new Dimension(300, 100));
@@ -26,7 +28,7 @@ public class AddNodePanel extends JPanel {
         add(new JLabel("... and connect to:", SwingConstants.RIGHT));
         connectedNodes = new JTextField(25);
         add(connectedNodes);
-        JButton clearButton = new JButton("Clear Text");
+        clearButton = new JButton("Clear Text");
         add(clearButton);
         addButton = new JButton("Add Node");
         add(addButton);
@@ -35,12 +37,12 @@ public class AddNodePanel extends JPanel {
         randomButton = new JButton("Add Random");
         add(randomButton);
 
-        clearButton.addActionListener(e -> {
-            nodesToAddField.setText("");
-            connectedNodes.setText("");
-        });
         nodesToAddField.setText("");
         connectedNodes.setText("");
+    }
+
+    public JButton getClearButton() {
+        return clearButton;
     }
 
     public JButton getRemoveNodesButton() {

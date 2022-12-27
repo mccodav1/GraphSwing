@@ -1,4 +1,4 @@
-package gs.gui.right;
+package gs.view.mainpane.right;
 
 import org.graphstream.graph.Graph;
 import org.graphstream.ui.view.Viewer;
@@ -12,10 +12,9 @@ public class RightPanel extends JPanel {
 
     private double viewPercent;
 
-    public RightPanel(Graph graph) {
+    public RightPanel() {
         super(new GridLayout(1, 1));
         setPreferredSize(new Dimension(600, 600));
-        redraw(graph);
     }
 
     public void setViewPercent(int i) {
@@ -26,7 +25,7 @@ public class RightPanel extends JPanel {
         return viewPercent;
     }
 
-    public void redraw(Graph graph) {
+    public void drawGraph(Graph graph) {
         Viewer viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_GUI_THREAD);
         viewer.enableAutoLayout();
         viewPanel = viewer.addDefaultView(false);

@@ -1,0 +1,38 @@
+All action listeners should be in their parent class
+
+
+
+OpenFilePopup is created in NodesPanel in action listener on openfilepanel 'add' button; relocate to master frame
+
+RightPanel:
+* Originally we passed GS to the constructor and it built the viewpanel. Instead, we're going to construct the frame sans the graph information, and pass it directly later to build the view.
+
+private void addActionListeners() {
+        this.addMouseWheelListener(e -> {
+            if (e.getWheelRotation() < 0) {
+                if (viewPercent > .05) viewPercent -= .05;
+            } else {
+                viewPercent += .05;
+            }
+            graphModel.getViewPanel().getCamera().setViewPercent(viewPercent);
+        });
+
+        // add listener for right arrow key
+        this.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_RIGHT) {
+                    Camera camera = graphModel.getViewPanel().getCamera();
+                    camera.setViewCenter(camera.getViewCenter().x + 10, camera.getViewCenter().y, 0);
+                } else if (evt.getKeyCode() == KeyEvent.VK_LEFT) {
+                    Camera camera = graphModel.getViewPanel().getCamera();
+                    camera.setViewCenter(camera.getViewCenter().x - 10, camera.getViewCenter().y, 0);
+                } else if (evt.getKeyCode() == KeyEvent.VK_UP) {
+                    Camera camera = graphModel.getViewPanel().getCamera();
+                    camera.setViewCenter(camera.getViewCenter().x, camera.getViewCenter().y - 10, 0);
+                } else if (evt.getKeyCode() == KeyEvent.VK_DOWN) {
+                    Camera camera = graphModel.getViewPanel().getCamera();
+                    camera.setViewCenter(camera.getViewCenter().x, camera.getViewCenter().y + 10, 0);
+                }
+            }
+        });
+    }

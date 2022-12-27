@@ -1,4 +1,4 @@
-package gs.gui.leftpanel.nodepanels.openfilepanels;
+package gs.view.mainpane.leftpanel.nodepanels.openfilepanels;
 
 import javax.swing.*;
 import javax.swing.border.Border;

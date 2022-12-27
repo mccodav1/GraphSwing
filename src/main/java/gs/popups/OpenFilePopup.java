@@ -1,6 +1,7 @@
-package gs.gui.leftpanel.nodepanels.openfilepopups;
+package gs.popups;
 
-import gs.core.GraphSwing;
+import com.lowagie.text.ExceptionConverter;
+import gs.core.GraphModel;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -9,21 +10,21 @@ import java.awt.*;
 
 public class OpenFilePopup extends JPanel {
 
+    private JLabel nodeLabel;
+    private JLabel linkLabel;
+    private JTextField nodeTF;
+    private JTextField linkTF;
+    private JButton nodeButton;
+    private JButton linkButton;
+    private JButton cancelButton;
+    private JButton openButton;
 
-    JLabel nodeLabel;
-    JLabel linkLabel;
-    JTextField nodeTF;
-    JTextField linkTF;
-    JButton nodeButton;
-    JButton linkButton;
-    JButton cancelButton;
-    JButton openButton;
+    private JFrame parent;
 
-    GraphSwing gs;
+    public OpenFilePopup(GraphModel model){
 
-    public OpenFilePopup(GraphSwing gs) {
 
-        this.gs = gs;
+
         setLayout(new GridLayout(2, 1, 10, 10));
 
         JPanel panel = new JPanel(new GridBagLayout());
@@ -87,13 +88,12 @@ public class OpenFilePopup extends JPanel {
         add(buttonPanel);
 
 
-        JFrame parent = new JFrame();
+        parent = new JFrame();
         parent.setTitle("Open Node / Link Files");
         parent.add(this);
         parent.pack();
         parent.setLocationRelativeTo(this);
         parent.setVisible(true);
-
         // node button should open a jfile chooser
         nodeButton.addActionListener(e -> {
             openFile(nodeTF);
@@ -112,10 +112,7 @@ public class OpenFilePopup extends JPanel {
 
         cancelButton.addActionListener(e -> parent.dispose());
 
-        openButton.addActionListener(e -> {
-            gs.getGraphFromFiles(nodeTF.getText(), linkTF.getText());
-            parent.dispose();
-        });
+
     }
 
      // only enable the open button if both text fields have a file path
@@ -133,8 +130,22 @@ public class OpenFilePopup extends JPanel {
                 tf.setText(fileName);
             }
         }
+    }
 
+    public JButton getOpenButton(){
+        return openButton;
+    }
 
+    public String getNodeFile() {
+        return nodeTF.getText();
+    }
+
+    public String getLinkFile() {
+        return linkTF.getText();
+    }
+
+    public void dispose(){
+        parent.dispose();
     }
 }
 

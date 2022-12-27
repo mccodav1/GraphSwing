@@ -1,6 +1,6 @@
-package gs.gui.leftpanel.nodepanels.sliderpanels;
+package gs.view.mainpane.leftpanel.nodepanels.sliderpanels;
 
-import gs.core.GraphSwing;
+import gs.core.GraphModel;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -10,7 +10,7 @@ public class SliderPanel extends JPanel {
 
         private JSlider slider;
 
-        private GraphSwing graphSwing;
+        private GraphModel graphModel;
 
         public SliderPanel() {
             setMaximumSize(new Dimension(300, 100));

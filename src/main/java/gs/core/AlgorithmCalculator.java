@@ -1,6 +1,5 @@
 package gs.core;
 
-import gs.core.GraphCreator;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 
@@ -21,15 +20,6 @@ public class AlgorithmCalculator {
     // Opportunity
     // Link Similarity
     // Key bridges
-
-    public static void main(String[] args) throws IOException {
-        Graph graph = GraphCreator.getGraphFromFiles("src/main/resources/links.csv");
-        String[] impNodes = getImportantNodes(graph);
-        for (String node : impNodes) {
-            System.out.println(node);
-        }
-    }
-
 
     public static String[] getImportantNodes(Graph graph) {
         int numberOfNodes = graph.getNodeCount();
