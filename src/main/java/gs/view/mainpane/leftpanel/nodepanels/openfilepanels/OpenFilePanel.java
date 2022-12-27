@@ -6,10 +6,10 @@ import java.awt.*;
 
 public class OpenFilePanel extends JPanel {
 
-    private JButton openButton;
-    private JButton saveButton;
+    private final JButton openButton;
+    private final JButton saveButton;
 
-    public OpenFilePanel(){
+    public OpenFilePanel() {
         setMaximumSize(new Dimension(300, 100));
         Border padding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
         setBorder(padding);

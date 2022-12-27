@@ -1,8 +1,5 @@
 package gs.popups;
 
-import com.lowagie.text.ExceptionConverter;
-import gs.core.GraphModel;
-
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -10,19 +7,13 @@ import java.awt.*;
 
 public class OpenFilePopup extends JPanel {
 
-    private JLabel nodeLabel;
-    private JLabel linkLabel;
-    private JTextField nodeTF;
-    private JTextField linkTF;
-    private JButton nodeButton;
-    private JButton linkButton;
-    private JButton cancelButton;
-    private JButton openButton;
+    private final JTextField nodeTF;
+    private final JTextField linkTF;
+    private final JButton openButton;
 
-    private JFrame parent;
+    private final JFrame parent;
 
-    public OpenFilePopup(GraphModel model){
-
+    public OpenFilePopup() {
 
 
         setLayout(new GridLayout(2, 1, 10, 10));
@@ -35,7 +26,7 @@ public class OpenFilePopup extends JPanel {
 
         GridBagConstraints c = new GridBagConstraints();
 
-        nodeLabel = new JLabel("Node File:");
+        JLabel nodeLabel = new JLabel("Node File:");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
         c.gridy = 0;
@@ -48,14 +39,14 @@ public class OpenFilePopup extends JPanel {
         nodeTF.setEditable(false);
         panel.add(nodeTF, c);
 
-        nodeButton = new JButton("Browse");
+        JButton nodeButton = new JButton("Browse");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 4;
         c.gridy = 0;
         panel.add(nodeButton, c);
 
 
-        linkLabel = new JLabel("Link File:");
+        JLabel linkLabel = new JLabel("Link File:");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
         c.gridy = 1;
@@ -68,7 +59,7 @@ public class OpenFilePopup extends JPanel {
         linkTF.setEditable(false);
         panel.add(linkTF, c);
 
-        linkButton = new JButton("Browse");
+        JButton linkButton = new JButton("Browse");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 4;
         c.gridy = 1;
@@ -78,7 +69,7 @@ public class OpenFilePopup extends JPanel {
 
         JPanel buttonPanel = new JPanel();
 
-        cancelButton = new JButton("Cancel");
+        JButton cancelButton = new JButton("Cancel");
         buttonPanel.add(cancelButton);
 
         openButton = new JButton("Open");
@@ -115,24 +106,24 @@ public class OpenFilePopup extends JPanel {
 
     }
 
-     // only enable the open button if both text fields have a file path
+    // only enable the open button if both text fields have a file path
 
 
     private void openFile(JTextField tf) {
-        String fileName = null;
+        String fileName;
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogType(JFileChooser.OPEN_DIALOG);
         fileChooser.setFileFilter(new FileNameExtensionFilter("CSV", "csv"));
         int returnValue = fileChooser.showOpenDialog(null);
-        if(returnValue == JFileChooser.APPROVE_OPTION) {
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
             fileName = fileChooser.getSelectedFile().getAbsolutePath();
-            if(fileName.toUpperCase().endsWith(".CSV")) {
+            if (fileName.toUpperCase().endsWith(".CSV")) {
                 tf.setText(fileName);
             }
         }
     }
 
-    public JButton getOpenButton(){
+    public JButton getOpenButton() {
         return openButton;
     }
 
@@ -144,7 +135,7 @@ public class OpenFilePopup extends JPanel {
         return linkTF.getText();
     }
 
-    public void dispose(){
+    public void dispose() {
         parent.dispose();
     }
 }

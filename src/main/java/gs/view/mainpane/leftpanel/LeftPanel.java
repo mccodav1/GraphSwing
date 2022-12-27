@@ -1,17 +1,17 @@
 package gs.view.mainpane.leftpanel;
 
-import gs.view.mainpane.leftpanel.nodepanels.NodesPanel;
 import gs.view.mainpane.leftpanel.algopanels.AlgoPanel;
+import gs.view.mainpane.leftpanel.nodepanels.NodesPanel;
 
 import javax.swing.*;
 
 public class LeftPanel extends JTabbedPane {
 
-    private NodesPanel nodesPanel;
-    private AlgoPanel algoPanel;
+    private final NodesPanel nodesPanel;
+    private final AlgoPanel algoPanel;
 
 
-    public LeftPanel(){
+    public LeftPanel() {
         nodesPanel = new NodesPanel();
         algoPanel = new AlgoPanel();
         addTab("Nodes", nodesPanel);
@@ -62,7 +62,7 @@ public class LeftPanel extends JTabbedPane {
         return nodesPanel.getRemoveLabelsButton();
     }
 
-    public JButton getCentralityButton(){
+    public JButton getCentralityButton() {
         return algoPanel.getCentralityButton();
     }
 }

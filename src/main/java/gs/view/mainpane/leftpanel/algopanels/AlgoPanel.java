@@ -5,8 +5,9 @@ import java.awt.*;
 
 public class AlgoPanel extends JPanel {
 
-    private JButton centralityButton;
-    public AlgoPanel(){
+    private final JButton centralityButton;
+
+    public AlgoPanel() {
         // set layout to new grid layout with 1 column and 2 rows
         setLayout(new GridLayout(2, 1, 10, 10));
         setMaximumSize(new Dimension(300, 2000));

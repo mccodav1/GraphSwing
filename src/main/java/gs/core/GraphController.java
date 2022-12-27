@@ -1,28 +1,28 @@
 package gs.core;
 
-import gs.view.GraphView;
 import gs.popups.OpenFilePopup;
+import gs.view.GraphView;
 
 
 public class GraphController {
 
-    private GraphModel model;
-    private GraphView view;
+    private final GraphModel model;
+    private final GraphView view;
+
     public GraphController(GraphModel model, GraphView view) {
         this.model = model;
         this.view = view;
     }
 
 
-    public void run(){
+    public void run() {
         view.redraw(model.getGraph());
         view.setVisible(true);
         addActionListeners();
     }
+
     private void addActionListeners() {
-        view.getClearButton().addActionListener(e -> {
-            view.clearNodeText();
-        });
+        view.getClearButton().addActionListener(e -> view.clearNodeText());
 
         view.getAddButton().addActionListener(e -> {
             String[] nodesToAdd = view.getNodesToAdd();
@@ -46,7 +46,7 @@ public class GraphController {
         });
 
         view.getOpenButton().addActionListener(e -> {
-            OpenFilePopup openFilePopup = new OpenFilePopup(model);
+            OpenFilePopup openFilePopup = new OpenFilePopup();
             openFilePopup.setVisible(true);
             // need to generate graph but also redraw after files opened
             openFilePopup.getOpenButton().addActionListener(f -> {
@@ -58,23 +58,15 @@ public class GraphController {
             });
         });
 
-        view.getSaveButton().addActionListener(e -> {
-            model.saveFile();
-        });
+        view.getSaveButton().addActionListener(e -> model.saveFile());
 
-        view.getRandomButton().addActionListener(e -> {
-            model.addRandomNodes();
-        });
+        view.getRandomButton().addActionListener(e -> model.addRandomNodes());
 
-        view.getAddLabelsButton().addActionListener(e -> {
-            model.setShowLabels(true);
-        });
+        view.getAddLabelsButton().addActionListener(e -> model.setShowLabels(true));
 
-        view.getRemoveLabelsButton().addActionListener(e -> {
-            model.setShowLabels(false);
-        });
+        view.getRemoveLabelsButton().addActionListener(e -> model.setShowLabels(false));
 
-        view.getCentralityButton().addActionListener(e->{
+        view.getCentralityButton().addActionListener(e -> {
             throw new UnsupportedOperationException("Not supported yet.");
         });
     }

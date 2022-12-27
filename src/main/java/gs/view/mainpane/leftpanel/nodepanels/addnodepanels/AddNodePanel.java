@@ -51,11 +51,11 @@ public class AddNodePanel extends JPanel {
 
     public String[] getNodesToAdd() {
         String nodes = nodesToAddField.getText();
-        if(nodes.trim().isEmpty()) {
+        if (nodes.trim().isEmpty()) {
             return null;
         }
         String[] nodesArray = nodes.split(",");
-        for(int i = 0; i < nodesArray.length; i++){
+        for (int i = 0; i < nodesArray.length; i++) {
             nodesArray[i] = nodesArray[i].trim();
         }
         return nodesArray;

@@ -9,10 +9,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class NodesPanel extends JPanel {
-    private AddNodePanel addNodePanel;
-    private SliderPanel sliderPanel;
-    private OpenFilePanel openFilePanel;
-    private ModifyDisplayPanel modifyDisplayPanel;
+    private final AddNodePanel addNodePanel;
+    private final SliderPanel sliderPanel;
+    private final OpenFilePanel openFilePanel;
+    private final ModifyDisplayPanel modifyDisplayPanel;
 
     public NodesPanel() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -47,7 +47,7 @@ public class NodesPanel extends JPanel {
         return sliderPanel.getSlider();
     }
 
-    public JButton getRemoveNodesButton(){
+    public JButton getRemoveNodesButton() {
         return addNodePanel.getRemoveNodesButton();
     }
 

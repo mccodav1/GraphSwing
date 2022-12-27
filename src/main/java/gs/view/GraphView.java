@@ -8,9 +8,9 @@ import java.awt.*;
 
 public class GraphView extends JFrame {
 
-    private MainPane mainPane;
+    private final MainPane mainPane;
 
-    public GraphView(){
+    public GraphView() {
 
         mainPane = new MainPane();
         add(mainPane);

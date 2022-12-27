@@ -1,13 +1,11 @@
 package gs.view.mainpane.leftpanel.nodepanels.modifydisplaypanels;
 
-import gs.core.GraphModel;
-
 import javax.swing.*;
 
 public class ModifyDisplayPanel extends JPanel {
-    private JButton addLabelsButton;
-    private JButton removeLabelsButton;
-    private GraphModel gs;
+    private final JButton addLabelsButton;
+    private final JButton removeLabelsButton;
+
     public ModifyDisplayPanel() {
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         addLabelsButton = new JButton("Add labels");
