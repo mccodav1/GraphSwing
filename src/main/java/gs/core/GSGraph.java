@@ -7,7 +7,12 @@ public class GSGraph extends SingleGraph {
         super(id);
         setStrict(false);
         setAutoCreate(true);
-        setAttribute("ui.quality");
+        setAttribute("ui.quality", 4); // 1 to 4
         setAttribute("ui.antialias");
+        setAttribute("layout.force", .1);
+        setAttribute("layout.stabilization-limit", 2);
+
+        //The force of repulsion of a node. The larger the value, the more the node repulses its neighbours. Set on node.
+        //setAttribute("layout.weight", 50);
     }
 }
