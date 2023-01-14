@@ -11,6 +11,7 @@ public class Main {
         // Model: GraphSwing
         // View: gsGUI
         // Controller: gs.Main
+        System.setProperty("org.graphstream.ui", "swing");
         GraphModel model = new GraphModel();
         GraphView view = new GraphView();
         GraphController controller = new GraphController(model, view);

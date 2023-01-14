@@ -65,7 +65,7 @@ public class GraphModel {
                 } else {
                     connectionName = new Faker().name().fullName();
                 }
-                graph.addEdge(name + "_" + connectionName, name, connectionName);
+                if(!name.equals(connectionName)) graph.addEdge(name + "_" + connectionName, name, connectionName);
             }
         }
     }
@@ -107,7 +107,7 @@ public class GraphModel {
             for (int i = 2; i < link.length; i++) {
                 String label = linkLabels[i];
                 String value = link[i];
-                e.addAttribute(label, value);
+                e.setAttribute(label, value);
             }
         }
         System.out.println("Edges added");
@@ -133,7 +133,7 @@ public class GraphModel {
     }
 
     public void setShowLabels(boolean b) {
-        graph.getNodeSet().forEach(node -> node.setAttribute("label", b ? node.getId() : ""));
+        graph.nodes().forEach(node -> node.setAttribute("label", b ? node.getId() : ""));
     }
 
     public Edge addEdge(String s, String node, String connectedNode) {

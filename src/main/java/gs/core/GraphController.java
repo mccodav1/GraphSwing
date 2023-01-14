@@ -30,7 +30,7 @@ public class GraphController {
                 String[] connectedNodes = view.getConnectedNodesToAdd();
                 for (String node : nodesToAdd) {
                     for (String connectedNode : connectedNodes) {
-                        model.addEdge(node + connectedNode, node, connectedNode).addAttribute("length", 1);
+                        model.addEdge(node + connectedNode, node, connectedNode).setAttribute("length", 1);
                     }
                     model.setNodeAttribute("label", node);
                 }

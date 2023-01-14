@@ -7,7 +7,7 @@ import org.graphstream.graph.Node;
 import org.graphstream.graph.Path;
 
 public class AlgorithmCalculator {
-
+//TODO implement
     // Awareness
     // Connector
     // Diversity
@@ -17,6 +17,7 @@ public class AlgorithmCalculator {
     // Link Similarity
     // Key bridges
 
+    /*
     public static int getNodeCentrality(Node node, Graph graph) {
         Path path;
         int centrality = 0;
@@ -60,5 +61,5 @@ public class AlgorithmCalculator {
     public static Path findShortestPath(Node fromNode, Node toNode, Graph graph) {
         return findShortestPath(fromNode.toString(), toNode.toString(), graph);
     }
-
+*/
 }

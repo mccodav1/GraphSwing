@@ -1,7 +1,11 @@
 package gs.view.mainpane.right;
 
 import org.graphstream.graph.Graph;
+import org.graphstream.ui.swing_viewer.SwingViewer;
+import org.graphstream.ui.swing_viewer.ViewPanel;
+import org.graphstream.ui.view.View;
 import org.graphstream.ui.view.Viewer;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,13 +28,15 @@ public class RightPanel extends JPanel {
     }
 
     public void drawGraph(Graph graph) {
-        Viewer viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_GUI_THREAD);
+        SwingViewer viewer = new SwingViewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+        View view = viewer.addDefaultView(false);
+        ViewPanel viewPanel = (ViewPanel) view;
         viewer.enableAutoLayout();
-        Component viewPanel = viewer.addDefaultView(false);
         setViewPercent(1);
         removeAll();
         add(viewPanel);
         revalidate();
         repaint();
+
     }
 }
