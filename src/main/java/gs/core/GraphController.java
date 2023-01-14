@@ -3,6 +3,8 @@ package gs.core;
 import gs.popups.OpenFilePopup;
 import gs.view.GraphView;
 
+import javax.swing.*;
+
 
 public class GraphController {
 
@@ -69,6 +71,22 @@ public class GraphController {
         view.getCentralityButton().addActionListener(e -> {
             throw new UnsupportedOperationException("Not supported yet.");
         });
+
+        JPanel panel = view.getRightFrame();
+        // add action listener to panel for scroll wheel
+        // when scrolled, set zoom percent, which is in view
+        panel.addMouseWheelListener(e -> {
+            if (e.getWheelRotation() < 0) {
+                // get camera and set view percent
+                view.zoomIn();
+            } else {
+                view.zoomOut();
+            }
+        });
+
+
+
+
     }
 
 }

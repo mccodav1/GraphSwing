@@ -10,7 +10,12 @@ import org.graphstream.ui.view.Viewer;
 import javax.swing.*;
 import java.awt.*;
 
+
 public class RightPanel extends JPanel {
+    private SwingViewer viewer;
+    private View view;
+
+    private ViewPanel viewPanel;
 
     private double viewPercent;
 
@@ -28,9 +33,9 @@ public class RightPanel extends JPanel {
     }
 
     public void drawGraph(Graph graph) {
-        SwingViewer viewer = new SwingViewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
-        View view = viewer.addDefaultView(false);
-        ViewPanel viewPanel = (ViewPanel) view;
+        viewer = new SwingViewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+        view = viewer.addDefaultView(false);
+        viewPanel = (ViewPanel) view;
         viewer.enableAutoLayout();
         setViewPercent(1);
         removeAll();
@@ -38,5 +43,19 @@ public class RightPanel extends JPanel {
         revalidate();
         repaint();
 
+    }
+
+    public void setViewPercent(double viewPercent) {
+        view.getCamera().setViewPercent(viewPercent);
+    }
+
+    public void zoomIn() {
+        viewPercent *= 1.05;
+        setViewPercent(viewPercent);
+    }
+
+    public void zoomOut(){
+        viewPercent *= 0.95;
+        setViewPercent(viewPercent);
     }
 }

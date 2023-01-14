@@ -76,4 +76,16 @@ public class MainPane extends JSplitPane {
     public JButton getCentralityButton() {
         return leftPanel.getCentralityButton();
     }
+
+    public JPanel getRightFrame() {
+        return rightPanel;
+    }
+
+    public void zoomIn() {
+        rightPanel.zoomIn();
+    }
+
+    public void zoomOut() {
+        rightPanel.zoomOut();
+    }
 }

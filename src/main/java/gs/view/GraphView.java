@@ -73,4 +73,16 @@ public class GraphView extends JFrame {
     public JButton getCentralityButton() {
         return mainPane.getCentralityButton();
     }
+
+    public JPanel getRightFrame() {
+        return mainPane.getRightFrame();
+    }
+
+    public void zoomIn() {
+        mainPane.zoomIn();
+    }
+
+    public void zoomOut(){
+        mainPane.zoomOut();
+    }
 }
